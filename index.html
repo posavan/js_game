@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simple JavaScript Game</title>
+        <style rel="stylesheet" href="style.css"></style>
+    </head>
+    <body>
+        <canvas id="canvas" width="480" height="320"></canvas>
+
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const ballRadius = 10;
+            let ballColor = "#0095DD";
+            let x = canvas.width / 2;
+            let y = canvas.height - 30;
+            let dx = 2;
+            let dy = -2;
+            let count = 0;
+
+            function drawBall(){
+                ctx.beginPath();
+                ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+                ctx.fillStyle = ballColor;
+                ctx.fill();
+                ctx.closePath();
+            };
+
+            function changeColor(c){
+                if(c === 0)
+                    ballColor = "#0095DD";
+                else if(c === 1)
+                    ballColor = "red";
+                else if(c === 2)
+                    ballColor = "yellow";
+                else if(c === 3)
+                    ballColor = "gray";
+                else if(c === 4) {
+                    ballColor = "green";
+                    count = 0;
+                };
+            };
+
+            function draw(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if(x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                    dx = -dx;
+                    changeColor(count++);
+                } if(y + dy > canvas.height - ballRadius || y + dy < ballRadius){
+                    dy = -dy;
+                    changeColor(count++);
+                };
+                drawBall();
+
+                x += dx;
+                y += dy;
+            };
+
+            setInterval(draw, 10);
+
+        </script>
+    </body>
+</html>
